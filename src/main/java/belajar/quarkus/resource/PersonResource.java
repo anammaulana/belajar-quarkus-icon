@@ -58,7 +58,7 @@ public Uni<Response> listAll() {
                 })
                 .onFailure().recoverWithItem(ex -> {
                     // Jika terjadi kesalahan, kembalikan pesan error
-                    MessageResult result = new MessageResult(false, "Gagal mengambil data: " + ex.getMessage(), null);
+                    MessageResult result = new  MessageResult(false, "Gagal mengambil data: " + ex.getMessage(), null);
                     return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(result).build();
                 });
     }
