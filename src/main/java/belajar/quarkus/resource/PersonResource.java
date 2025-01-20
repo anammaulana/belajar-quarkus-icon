@@ -4,6 +4,8 @@ package belajar.quarkus.resource;
 import belajar.quarkus.entity.Person;
 import belajar.quarkus.param.PersonParam;
 import belajar.quarkus.result.MessageResult;
+import io.quarkus.hibernate.reactive.panache.Panache;
+import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -13,15 +15,13 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import io.quarkus.hibernate.reactive.panache.Panache;
-import io.smallrye.mutiny.Uni;
 
 @Path("/persons")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PersonResource {
 
-  @GET
+@GET
 @Produces(MediaType.APPLICATION_JSON)
 public Uni<Response> listAll() {
     return Person.listAll()
@@ -40,6 +40,7 @@ public Uni<Response> listAll() {
             MessageResult result = new MessageResult(false, "Gagal mengambil data: " + ex.getMessage(), null);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(result).build();
         });
+
 }
   @GET
     @Path("/{id}")
@@ -58,7 +59,7 @@ public Uni<Response> listAll() {
                 })
                 .onFailure().recoverWithItem(ex -> {
                     // Jika terjadi kesalahan, kembalikan pesan error
-                    MessageResult result = new  MessageResult(false, "Gagal mengambil data: " + ex.getMessage(), null);
+                    MessageResult result = new MessageResult(false, "Gagal mengambil data: " + ex.getMessage(), null);
                     return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(result).build();
                 });
     }
@@ -83,7 +84,7 @@ public Uni<Response> listAll() {
                         }));
     }
 
-     @DELETE
+    @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<Response> deletePersonById(@PathParam("id") Long id) {

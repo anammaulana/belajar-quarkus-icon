@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import axios from "axios";
 
+import axios from "axios";
 export default {
   data() {
     return {
@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     async sendRequest() {
-      const apiUrl = `/api/persons${this.personId ? `/${this.personId}` : ""}`;
+      const apiUrl = `/api/persons/${this.personId ? `/${this.personId}` : ""}`;
       let response;
 
       try {
